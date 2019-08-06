@@ -649,7 +649,7 @@ export default class ApiRequest extends LitElement {
         else if(contentType.includes('octet-stream')) {
           me.responseIsBlob  = true;
           let contentDisposition = resp.headers.get('content-disposition');
-          me.respContentDisposition = contentDisposition? contentDisposition.split('filename=')[1]:"filename";
+          me.respContentDisposition = contentDisposition? contentDisposition.split('filename=')[1].replace(/^"(.*)"$|^(.*)/g,"$1"):"filename";
           resp.blob().then(function(respBlob) {
             me.responseBlobUrl = URL.createObjectURL(respBlob);
           })
